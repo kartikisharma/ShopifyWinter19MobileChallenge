@@ -1,5 +1,6 @@
 package kartiki.winter19challenge
 
+import kartiki.winter19challenge.models.ProductsResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package kartiki.winter19challenge
+package kartiki.winter19challenge.models
 
 import android.os.Parcel
 import com.google.gson.annotations.SerializedName

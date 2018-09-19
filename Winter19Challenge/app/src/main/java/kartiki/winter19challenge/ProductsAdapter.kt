@@ -1,6 +1,5 @@
 package kartiki.winter19challenge
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,32 +8,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.internal.Utils
 import com.squareup.picasso.Picasso
-import android.util.DisplayMetrics
+import kartiki.winter19challenge.models.Product
 
 
 /**
  * Created by Kartiki on 2018-09-17.
  */
 
-//fun dpToPixel(dp: Float, context: Context): Float {
-//    val metrics = context.resources.displayMetrics
-//    return dp * (metrics.densityDpi / 160f)
-//}
-
 class ProductsAdapter(private val products: ArrayList<Product>) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val currentProduct = products.get(position)
+        val currentProduct = products[position]
 
-        Picasso.with(holder.imageView.context)
-                .load(currentProduct.productImage.imageUrl)
-                .placeholder(android.R.color.darker_gray)
-                .resize(holder.imageView.maxWidth, holder.imageView.maxHeight)
-                .into(holder.imageView)
-
-        holder.titleTextView.text = currentProduct.title
-        holder.descriptionTextView.text = currentProduct.description
+        holder.setImage(currentProduct.productImage.imageUrl ?: "")
+        holder.setTitle(currentProduct.title)
+        holder.setDescription(currentProduct.description)
+        holder.setQuantity(currentProduct.getQuantity())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -57,8 +46,31 @@ class ProductsAdapter(private val products: ArrayList<Product>) : RecyclerView.A
         @BindView(R.id.product_image)
         lateinit var imageView: ImageView
 
+        @BindView(R.id.product_inventory)
+        lateinit var productInventory: TextView
+
         init {
             ButterKnife.bind(this, itemView)
+        }
+
+        fun setImage(imageUrl: String) {
+            Picasso.with(imageView.context)
+                    .load(imageUrl)
+                    .placeholder(android.R.color.darker_gray)
+                    .resize(imageView.maxWidth, imageView.maxHeight)
+                    .into(imageView)
+        }
+
+        fun setTitle(text: String) {
+            titleTextView.text = text
+        }
+
+        fun setDescription(text: String) {
+            descriptionTextView.text = text
+        }
+
+        fun setQuantity(amount: Int) {
+            productInventory.text = String.format(productInventory.context.getString(R.string.product_quantity_availability), amount)
         }
     }
 }

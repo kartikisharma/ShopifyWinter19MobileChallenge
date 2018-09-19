@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context="kartiki.winter19challenge.MainActivity">
 
-
     <android.support.v7.widget.RecyclerView
         android:visibility="gone"
         android:id="@+id/recycler_view"
